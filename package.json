@@ -1,0 +1,11 @@
+{
+  "name": "cordova-plugin-sip-call",
+  "version": "1.0.0",
+  "cordova": {
+    "id": "cordova-plugin-sip-call",
+    "platforms": [
+      "android"
+    ]
+  },
+  "description": "A cordova plugin to make SIP calls"
+}

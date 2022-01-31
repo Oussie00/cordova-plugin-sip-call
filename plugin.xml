@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="cordova-plugin-sip-call"
+    version="1.0.0">
+    <name>SIP Call</name>
+    <description></description>
+    <license>MIT</license>
+    <keywords></keywords>
+    <repo>https://github.com/driftyco/cordova-plugin-template.git</repo>
+    <issue>https://github.com/driftyco/cordova-plugin-template/issues</issue>
+
+    <!-- android -->
+    <platform name="android">
+      <js-module src="www/plugin.js" name="SipCall">
+        <runs/>
+
+        <!-- This is the window variable name you want, like navigator.SipCall -->
+        <clobbers target="window.plugins.SipCall" />
+      </js-module>
+      <config-file target="res/xml/config.xml" parent="/*">
+        <feature name="SipCall">
+          <param name="android-package" value="com.oussama.sip.SipCall" />
+          <param name="onload" value="true" />
+        </feature>
+        <preference name="android-minSdkVersion" value="23" />
+      </config-file>
+      <framework src="src/android/plugin.gradle" custom="true" type="gradleReference"/>
+      <source-file src="src/android/com/oussama/sip/SipCall.java" target-dir="src/com/oussama/sip" />
+      <source-file src="src/android/com/oussama/sip/SipCallFacade.java" target-dir="src/com/oussama/sip" />
+    </platform>
+</plugin>
