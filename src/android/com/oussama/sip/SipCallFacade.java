@@ -1,5 +1,9 @@
 package com.oussama.sip;
 
+import java.util.Arrays;
+import android.content.Context;
+import androidx.annotation.NonNull;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 
@@ -9,6 +13,7 @@ import org.json.JSONException;
 import org.linphone.core.Account;
 import org.linphone.core.AccountParams;
 import org.linphone.core.Address;
+import org.linphone.core.AudioDevice;
 import org.linphone.core.AuthInfo;
 import org.linphone.core.Call;
 import org.linphone.core.CallParams;
@@ -19,12 +24,6 @@ import org.linphone.core.MediaEncryption;
 import org.linphone.core.RegistrationState;
 import org.linphone.core.TransportType;
 import org.linphone.core.tools.Log;
-import org.linphone.mediastream.MediastreamerAndroidContext;
-
-
-import androidx.annotation.NonNull;
-
-import android.content.Context;
 
 public class SipCallFacade {
   private static final String TAG = "SipCallFacade";
@@ -260,10 +259,42 @@ public class SipCallFacade {
   }
 
   public void setSpeakerEnabled(Boolean enabled) {
+    if (core.getCallsNb() == 0) {
+      return;
+    }
+
+    Call call = core.getCurrentCall();
+    call = core.getCurrentCall() != null ? call : core.getCalls()[0];
+    AudioDevice[] audioDevices = core.getAudioDevices(); 
+
+    // TODO: send error plugin result -> no audio devices found
+
     if(enabled) {
-        MediastreamerAndroidContext.enableSpeaker();
+        // get audio device with type == speaker
+        AudioDevice speakerAudioDevice = Arrays
+          .stream(audioDevices)
+          .filter(d -> d.getType().equals(AudioDevice.Type.Speaker))
+          .findFirst()
+          .orElse(null);
+
+        // TODO: send error plugin result -> no speaker audioDevice found
+        // set call output audio device
+        if(speakerAudioDevice != null) {
+          call.setOutputAudioDevice(speakerAudioDevice);
+        }
     } else {
-        MediastreamerAndroidContext.enableEarpiece();
+        // get audio device with type == earpiece
+        AudioDevice earpieceAudioDevice = Arrays
+          .stream(audioDevices)
+          .filter(d -> d.getType().equals(AudioDevice.Type.Earpiece))
+          .findFirst()
+          .orElse(null);
+
+        // TODO: send error plugin result -> no earpiece audioDevice found
+        // set call output audio device
+        if(earpieceAudioDevice != null) {
+          call.setOutputAudioDevice(earpieceAudioDevice);
+        }
     }
   }
 }
