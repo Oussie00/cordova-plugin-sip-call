@@ -9,5 +9,6 @@ repositories {
 }
 
 dependencies {
+    debugImplementation "org.linphone:linphone-sdk-android-debug:5.0+"
     releaseImplementation "org.linphone:linphone-sdk-android:5.0+"
 }
