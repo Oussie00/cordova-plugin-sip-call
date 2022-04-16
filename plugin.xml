@@ -28,5 +28,6 @@
       <framework src="src/android/plugin.gradle" custom="true" type="gradleReference"/>
       <source-file src="src/android/com/oussama/sip/SipCall.java" target-dir="src/com/oussama/sip" />
       <source-file src="src/android/com/oussama/sip/SipCallFacade.java" target-dir="src/com/oussama/sip" />
+      <lib-file src="src/android/libs/linphone-sdk-android-5.1.23.aar" target="libs/linphone-sdk-android-5.1.23.aar"/>
     </platform>
 </plugin>

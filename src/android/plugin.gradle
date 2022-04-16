@@ -1,14 +1,13 @@
 repositories {
-    maven {
-        name "linphone.org maven repository"
-        url "https://linphone.org/maven_repository/"
-        content {
-            includeGroup "org.linphone"
-        }
-    }
+ flatDir { dirs 'libs' }
+}
+dependencies {
+    implementation 'org.linphone.core:linphone-sdk-android-5.1.23@aar'
 }
 
-dependencies {
-    debugImplementation "org.linphone:linphone-sdk-android-debug:5.0+"
-    releaseImplementation "org.linphone:linphone-sdk-android:5.0+"
+android {
+ packagingOptions {
+  exclude 'META-INF/NOTICE'
+  exclude 'META-INF/LICENSE'  
+ }
 }
